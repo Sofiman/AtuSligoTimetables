@@ -1,10 +1,12 @@
 import 'package:atu_sligo_timetables/def.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class CourseView extends StatelessWidget {
+  final dayFormat = DateFormat.MMMMEEEEd();
   final Course course;
 
-  const CourseView({super.key, required this.course});
+  CourseView({super.key, required this.course});
 
   List<String> getStaffMembers() {
     return course.staff.split(",").map((e) => e.trim()).toList();
@@ -14,9 +16,23 @@ class CourseView extends StatelessWidget {
     return course.studentGroups.split(";").map((e) => e.trim()).toList();
   }
 
-  String renderDuration(){
-    final TimeOfDay d = course.duration;
+  String formatClock(TimeOfDay d) {
     return "${d.hour}h${d.minute > 0 ? d.minute.toString().padLeft(2, '0') : ""}";
+  }
+
+  String formatDateClock(DateTime d) {
+    return "${d.hour}h${d.minute > 0 ? d.minute.toString().padLeft(2, '0') : ""}";
+  }
+
+  bool isSameDay(DateTime a, DateTime b) {
+    return a.year == b.year && a.month == b.month && a.day == b.day;
+  }
+
+  String renderDuration() {
+    final String start = "${dayFormat.format(course.start)}, ${formatDateClock(course.start)}";
+    final sameDay = isSameDay(course.start, course.end);
+    final String end = "${sameDay ? "" : "${dayFormat.format(course.start)}, "}${formatDateClock(course.end)}";
+    return "$start → $end (${formatClock(course.duration)})";
   }
 
   @override
@@ -43,8 +59,8 @@ class CourseView extends StatelessWidget {
                         child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(course.module, style: theme.textTheme.caption),
-                        Text(course.name,
+                        SelectableText(course.module, style: theme.textTheme.caption),
+                        SelectableText(course.name,
                             style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
                       ],
                     )),
@@ -57,12 +73,12 @@ class CourseView extends StatelessWidget {
                 const SizedBox(height: 4),
                 const Divider(),
                 const SizedBox(height: 6),
-                Text("Duration", style: theme.textTheme.labelLarge),
+                Text("Dates", style: theme.textTheme.labelLarge),
                 Container(
                   color: chipDefaults.backgroundColor,
                   padding: const EdgeInsets.all(8),
                   margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
-                  child: Text(renderDuration(), style: theme.chipTheme.labelStyle),
+                  child: SelectableText(renderDuration(), style: theme.chipTheme.labelStyle),
                 ),
                 Text("Type", style: theme.textTheme.labelLarge),
                 const SizedBox(height: 12),
@@ -87,11 +103,11 @@ class CourseView extends StatelessWidget {
                   color: chipDefaults.backgroundColor,
                   padding: const EdgeInsets.all(8),
                   margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
-                  child: Text(course.room, style: theme.chipTheme.labelStyle),
+                  child: SelectableText(course.room, style: theme.chipTheme.labelStyle),
                 ),
                 Text("Staff", style: theme.textTheme.labelLarge),
                 const SizedBox(height: 8),
-                Flex(
+                Wrap(
                   direction: Axis.horizontal,
                   children: [
                     for (var staff in getStaffMembers())
@@ -103,7 +119,7 @@ class CourseView extends StatelessWidget {
                             foregroundColor: Colors.white,
                             child: Icon(Icons.school, size: 16),
                           ),
-                          label: Text(staff),
+                          label: SelectableText(staff),
                         ),
                       ),
                   ],
@@ -122,7 +138,7 @@ class CourseView extends StatelessWidget {
                               backgroundColor: Colors.deepPurpleAccent,
                               foregroundColor: Colors.white,
                               child: Icon(Icons.groups, size: 16)),
-                          label: Text(group),
+                          label: SelectableText(group),
                         ),
                       ),
                   ],
