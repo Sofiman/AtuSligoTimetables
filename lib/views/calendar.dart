@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:atu_sligo_timetables/views/course.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:http/http.dart' as http;
@@ -127,18 +129,20 @@ class _CalendarViewState extends State<CalendarView> {
                     initialDate: _currentDate,
                     dayStart: 8,
                     dayEnd: 20,
-                    visibleRange: width < 600 ? 1 : (width / 180).floor(),
+                    visibleRange: width < 600 ? 1 : min((width / 240).floor(), 7),
                     events: agenda,
+                    cellHeight: 60 + width/80,
                     buildHeader: (date, isToday) {
+                      final dark = Theme.of(context).brightness == Brightness.dark;
                       return Center(
                         child: Container(
                           decoration: BoxDecoration(
-                            color: isToday ? Colors.white : Colors.transparent,
+                            color: isToday ? (dark ? Colors.white : Colors.black) : Colors.transparent,
                             borderRadius: BorderRadius.circular(16),
                           ),
-                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 6),
+                          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 6),
                           child: DefaultTextStyle(
-                            style: TextStyle(color: isToday ? Colors.black : Colors.white),
+                            style: TextStyle(color: isToday == dark ? Colors.black : Colors.white),
                             child: Column(
                               children: [
                                 Text(_dayFormat.format(date), style: const TextStyle(fontSize: 12)),
