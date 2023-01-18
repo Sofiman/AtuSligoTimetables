@@ -54,7 +54,7 @@ class _CalendarViewState extends State<CalendarView> {
     var weekNum = weeksBetween(semesterStart, weekStart) + 1;
     logger.d("Fetching data for week $weekNum");
     var url = Uri.parse(
-        'http://timetables.itsligo.ie:81/reporting/textspreadsheet;student+set;id;SG_KGADV_B07%2FF%2FY2%2F1%2F%28A%29%0D%0A?t=student+set+textspreadsheet&days=1-7&=21&periods=3-20&=student+set+textspreadsheet&=22&=student+set+textspreadsheet&weeks=$weekNum&template=student+set+textspreadsheet');
+        'http://timetables.itsligo.ie:81/reporting/textspreadsheet;student+set;id;SG_KGADV_B07%2FF%2FY2%2F1%2F%28A%29%0D%0A?days=1-7&=21&periods=3-20&=22&weeks=$weekNum&template=student+set+textspreadsheet');
     var response = await http.get(url);
 
     if (response.statusCode != 200) {
@@ -75,7 +75,7 @@ class _CalendarViewState extends State<CalendarView> {
           var startDate =
               weekStart.add(Duration(days: i, hours: startTime.hour, minutes: startTime.minute));
           var endDate = weekStart
-              .add(Duration(days: i, hours: endTime.hour, minutes: endTime.minute, seconds: 59));
+              .add(Duration(days: i, hours: endTime.hour, minutes: endTime.minute - 1));
           var course = Course(
               raw.children[0].text,
               raw.children[1].text,
