@@ -1,4 +1,4 @@
-import 'package:atu_sligo_timetables/def.dart';
+import 'package:atu_sligo_timetables/timetable.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
