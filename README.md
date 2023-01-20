@@ -1,16 +1,13 @@
-# atu_sligo_timetables
+# ATU Sligo Timetables (Unofficial)
 
-Modern ATU Sligo timetables (uses scrapping)
+ATU Sligo Timetables is a unofficial flutter app that offers a more intuitive way of viewing your ATU
+Sligo timetables. This app fetches and parses the official timetable website for timetable data.
 
-## Getting Started
+## Screenshots
 
-This project is a starting point for a Flutter application.
+![The app running on MacOS](https://github.com/Sofiman/AtuSligoTimetables/blob/master/screenshots/macos.png?raw=true)
 
-A few resources to get you started if this is your first Flutter project:
+## TODO
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- [ ] Add group selection
+- [ ] Improve week switching
