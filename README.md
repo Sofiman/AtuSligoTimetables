@@ -5,9 +5,9 @@ Sligo timetables. This app fetches and parses the official timetable website for
 
 ## Screenshots
 
-![The app running on MacOS](https://github.com/Sofiman/AtuSligoTimetables/blob/master/screenshots/macos.png?raw=true)
+![The app running on MacOS](https://github.com/Sofiman/AtuSligoTimetables/blob/master/screenshots/macos_dark.png?raw=true)
 
 ## TODO
 
+- [X] Improve week switching
 - [ ] Add group selection
-- [ ] Improve week switching
