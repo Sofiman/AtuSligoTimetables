@@ -9,7 +9,7 @@ class CourseView extends StatelessWidget {
   CourseView({super.key, required this.course});
 
   List<String> getStaffMembers() {
-    return course.staff.split(",").map((e) => e.trim()).toList();
+    return course.staff.split(";").map((e) => e.trim()).toList();
   }
 
   List<String> getGroups() {
